@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    text-align: center;
+    padding: 30px;
+}
+
+/* Input de adicionar jogador */
+#lerJogador {
+    padding: 8px 12px;       /* Espaçamento interno */
+    border-radius: 5px;      /* Cantos arredondados */
+    border: 1px solid #ccc;  /* Borda discreta */
+    width: 200px;             /* Largura fixa */
+    margin-right: 10px;       /* Espaço entre input e botão */
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil */
+    transition: all 0.2s;    /* Suaviza hover e foco */
+}
+
+/* Quando o input está em foco */
+#lerJogador:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+#listaJogadoresTela li {
+    background-color: #fff;
+    margin: 5px auto;
+    padding: 10px;
+    width: 200px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+#cartoesJogadores li {
+    background-color: #e0f7fa;
+    margin: 10px auto;
+    padding: 15px;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+button {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#adicionarJogador {
+    margin-left: 5px;  /* mantém a distância horizontal */
+    margin-top: 10px;  /* empurra o botão para baixo */
+}
+
+
+button:hover {
+    background-color: #1976d2;
+}
+
+span {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#iniciarJogo {
+    background-color: #4caf50;
+}
+
+#reiniciarJogo {
+    background-color: #f44336;
+}
+
+select {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
