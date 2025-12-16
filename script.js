@@ -20,6 +20,7 @@ const listaTela = document.getElementById("listaJogadoresTela");
 const lerJogador = document.getElementById("lerJogador");
 const adicionarJogador = document.getElementById("adicionarJogador");
 const iniciarJogo = document.getElementById("iniciarJogo");
+const reiniciarTudo = document.getElementById("reiniciarTudo");
 const reiniciarJogo = document.getElementById("reiniciarJogo");
 const cartoesJogadores = document.getElementById("cartoesJogadores");
 const selecionarTemas = document.getElementById('temas');
@@ -92,11 +93,60 @@ iniciarJogo.addEventListener('click', function() {
     criarCartoes();
 });
 
+function reiniciarSorteio() {
+    if(listaJogadores.length < 4){
+        alert("Número de jogadores insuficiente");
+        return;
+    }
+
+    // Sorteia novo impostor
+    const indiceAleatorio = Math.floor(Math.random() * listaJogadores.length);
+    impostor = listaJogadores[indiceAleatorio];
+
+    // Sorteia nova palavra do mesmo tema
+    const palavrasDoTema = palavrasPorTema[temaEscolhido];
+    const indicePalavra = Math.floor(Math.random() * palavrasDoTema.length);
+    palavraSorteada = palavrasDoTema[indicePalavra];
+
+    console.log("NOVO SORTEIO");
+    console.log("Tema:", temaEscolhido);
+    console.log("Palavra sorteada:", palavraSorteada);
+    console.log("Impostor:", impostor);
+
+    criarCartoes();
+}
+
+reiniciarJogo.addEventListener('click', function() {
+    reiniciarSorteio();
+});
+
+
+
 
 // Função para reiniciar o jogo
-reiniciarJogo.addEventListener('click', function() {
+reiniciarTudo.addEventListener('click', function() {
     location.reload(true);
 });
+
+reiniciarJogo.addEventListener('click', function() {
+    // Reseta estado do jogo
+    impostor = null;
+    temaEscolhido = null;
+    palavraSorteada = null;
+
+    // Limpa cartões
+    cartoesJogadores.innerHTML = "";
+
+    // Reativa inputs
+    lerJogador.disabled = false;
+    adicionarJogador.disabled = false;
+
+    // Libera nova escolha de tema
+    selecionarTemas.value = "";
+
+    alert("Jogo reiniciado! Você pode adicionar jogadores e escolher um novo tema.");
+});
+
 
 // Função para criar cartões de jogadores
 function criarCartoes() {
