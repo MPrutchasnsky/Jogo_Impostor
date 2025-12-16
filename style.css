@@ -82,6 +82,10 @@ span {
     background-color: #f44336;
 }
 
+#reiniciarTudo {
+    background-color: #f44336;
+}
+
 select {
     padding: 5px 10px;
     border-radius: 5px;
