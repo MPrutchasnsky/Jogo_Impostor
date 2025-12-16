@@ -79,7 +79,7 @@ span {
 }
 
 #proximaRodada {
-    background-color: blueviolet;
+    background-color: #A020F0;
 }
 
 #reiniciarTudo {
@@ -91,3 +91,4 @@ select {
     border-radius: 5px;
     margin-bottom: 20px;
 }
+
