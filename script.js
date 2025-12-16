@@ -21,7 +21,7 @@ const lerJogador = document.getElementById("lerJogador");
 const adicionarJogador = document.getElementById("adicionarJogador");
 const iniciarJogo = document.getElementById("iniciarJogo");
 const reiniciarTudo = document.getElementById("reiniciarTudo");
-const reiniciarJogo = document.getElementById("reiniciarJogo");
+const proximaRodada = document.getElementById("proximaRodada");
 const cartoesJogadores = document.getElementById("cartoesJogadores");
 const selecionarTemas = document.getElementById('temas');
 
@@ -128,7 +128,7 @@ reiniciarTudo.addEventListener('click', function() {
     location.reload(true);
 });
 
-reiniciarJogo.addEventListener('click', function() {
+proximaRodada.addEventListener('click', function() {
     // Reseta estado do jogo
     impostor = null;
     temaEscolhido = null;
