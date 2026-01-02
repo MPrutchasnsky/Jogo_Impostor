@@ -23,11 +23,11 @@ const iniciarJogo = document.getElementById("iniciarJogo");
 const reiniciarTudo = document.getElementById("reiniciarTudo");
 const proximaRodada = document.getElementById("proximaRodada");
 const cartoesJogadores = document.getElementById("cartoesJogadores");
-const selecionarTemas = document.getElementById('temas');
+const selecionarTemas = document.getElementById("temas");
 
 // Preenche select de temas
-temas.forEach((tema) => {
-    const option = document.createElement('option');
+temas.forEach(function(tema) {
+    const option = document.createElement("option");
     option.value = tema;
     option.textContent = tema;
     selecionarTemas.appendChild(option);
@@ -36,19 +36,20 @@ temas.forEach((tema) => {
 // Variáveis globais
 let impostor = null;
 let temaEscolhido = null;
+let palavraSorteada = null;
 
-// Função para atualizar lista de jogadores
+// Atualiza lista de jogadores
 function atualizarListaNaTela() {
     listaTela.innerHTML = "";
-    listaJogadores.forEach(jogador => {
+    listaJogadores.forEach(function(jogador) {
         const li = document.createElement("li");
         li.textContent = jogador;
         listaTela.appendChild(li);
     });
 }
 
-// Função para adicionar jogador
-adicionarJogador.addEventListener('click', function () {
+// Adicionar jogador
+adicionarJogador.addEventListener("click", function () {
     if (lerJogador.value !== "") {
         listaJogadores.push(lerJogador.value);
         lerJogador.value = "";
@@ -56,36 +57,23 @@ adicionarJogador.addEventListener('click', function () {
     }
 });
 
-// Função para iniciar o jogo
-iniciarJogo.addEventListener('click', function() {
+// Iniciar jogo
+iniciarJogo.addEventListener("click", function() {
     if(listaJogadores.length < 4){
         alert("Número de jogadores insuficiente, mínimo 4");
         return;
     }
-    if(impostor !== null){
-        alert("O jogo já foi iniciado");
+
+    if(!selecionarTemas.value){
+        alert("Escolha um tema");
         return;
     }
 
-    // Sorteia o impostor
-    const indiceAleatorio = Math.floor(Math.random() * listaJogadores.length);
-    impostor = listaJogadores[indiceAleatorio];
-
-    // Pega o tema selecionado no select
     temaEscolhido = selecionarTemas.value;
-    if(!temaEscolhido){
-        alert("Escolha um tema antes de iniciar");
-        return;
-    }
 
-    // Sorteia uma palavra dentro do tema escolhido
+    impostor = listaJogadores[Math.floor(Math.random() * listaJogadores.length)];
     const palavrasDoTema = palavrasPorTema[temaEscolhido];
-    const indicePalavra = Math.floor(Math.random() * palavrasDoTema.length);
-    palavraSorteada = palavrasDoTema[indicePalavra];
-
-    console.log("Tema:", temaEscolhido);
-    console.log("Palavra sorteada:", palavraSorteada);
-    console.log("Impostor:", impostor);
+    palavraSorteada = palavrasDoTema[Math.floor(Math.random() * palavrasDoTema.length)];
 
     lerJogador.disabled = true;
     adicionarJogador.disabled = true;
@@ -93,43 +81,9 @@ iniciarJogo.addEventListener('click', function() {
     criarCartoes();
 });
 
-function reiniciarSorteio() {
-    if(listaJogadores.length < 4){
-        alert("Número de jogadores insuficiente");
-        return;
-    }
-
-    // Sorteia novo impostor
-    const indiceAleatorio = Math.floor(Math.random() * listaJogadores.length);
-    impostor = listaJogadores[indiceAleatorio];
-
-    // Sorteia nova palavra do mesmo tema
-    const palavrasDoTema = palavrasPorTema[temaEscolhido];
-    const indicePalavra = Math.floor(Math.random() * palavrasDoTema.length);
-    palavraSorteada = palavrasDoTema[indicePalavra];
-
-    console.log("NOVO SORTEIO");
-    console.log("Tema:", temaEscolhido);
-    console.log("Palavra sorteada:", palavraSorteada);
-    console.log("Impostor:", impostor);
-
-    criarCartoes();
-}
-
-reiniciarJogo.addEventListener('click', function() {
-    reiniciarSorteio();
-});
-
-
-
-
-// Função para reiniciar o jogo
-reiniciarTudo.addEventListener('click', function() {
-    location.reload(true);
-});
-
-proximaRodada.addEventListener('click', function() {
-    // Reseta estado do jogo
+// Próxima rodada (novo sorteio)
+proximaRodada.addEventListener("click", function() {
+    // Reseta estado da rodada
     impostor = null;
     temaEscolhido = null;
     palavraSorteada = null;
@@ -137,22 +91,27 @@ proximaRodada.addEventListener('click', function() {
     // Limpa cartões
     cartoesJogadores.innerHTML = "";
 
-    // Reativa inputs
+    // Libera escolha de tema
+    selecionarTemas.value = "";
+
+    // 🔽 LIBERA ADIÇÃO DE JOGADORES
     lerJogador.disabled = false;
     adicionarJogador.disabled = false;
 
-    // Libera nova escolha de tema
-    selecionarTemas.value = "";
-
-    alert("Jogo reiniciado! Você pode adicionar jogadores e escolher um novo tema.");
+    alert("Rodada resetada! Escolha um novo tema, adicione mais jogadores e clique em Iniciar Jogo.");
 });
 
 
-// Função para criar cartões de jogadores
+// Reiniciar tudo
+reiniciarTudo.addEventListener("click", function() {
+    location.reload(true);
+});
+
+// Criar cartões
 function criarCartoes() {
     cartoesJogadores.innerHTML = "";
 
-    listaJogadores.forEach(jogador => {
+    listaJogadores.forEach(function(jogador) {
         const li = document.createElement("li");
         li.style.marginBottom = "10px";
 
@@ -167,16 +126,10 @@ function criarCartoes() {
         conteudoOculto.style.marginLeft = "10px";
         conteudoOculto.style.fontWeight = "bold";
 
-        // Sorteia palavra para cada jogador
-        let palavraDoJogador;
-        if(jogador === impostor){
-            palavraDoJogador = "VOCÊ É O IMPOSTOR";
-        } else {
-            palavraDoJogador = palavraSorteada; // todos recebem a mesma palavra
-        }
+        let palavraDoJogador = (jogador === impostor)
+            ? "VOCÊ É O IMPOSTOR"
+            : palavraSorteada;
 
-
-        // Evento do botão
         botao.addEventListener("click", function() {
             if(conteudoOculto.style.display === "none"){
                 conteudoOculto.textContent = palavraDoJogador;
